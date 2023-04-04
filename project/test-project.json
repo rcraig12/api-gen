@@ -1,0 +1,19 @@
+{
+  "projectName" : "Test Project",
+  "projectVersion" : "1.0.0",
+  "models" : [
+    { 
+      "tableName" : "users",
+      "fields" : [
+        { "fieldName" : "name", "fieldType" : "string" },
+        { "fieldName" : "email", "fieldType" : "string" },
+        { "fieldName" : "password", "fieldType" : "bcrypt" },
+        { "fieldName" : "role", "fieldType" : "string" }
+      ]
+    }
+  ],
+  "controllers" : [],
+  "views" : [],
+  "routes" : [],
+  "middleware" : []
+}
