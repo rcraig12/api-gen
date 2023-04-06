@@ -1,5 +1,14 @@
-// This is a test for a template - love it
+// Include the mongoose library
+const mongoose = require('mongoose');
 
-const <%= template.modelName %> = "test";
+// Define the schema for the <%= template.modelName %> model
+const <%= template.modelName %>Schema = new mongoose.Schema({
+<% for(var i=0; i< template.fields.length; i++) { -%>
+  <%= template.fields[i].fieldName %>: {
+    type: <%= template.fields[i].fieldType %>
+  }<% if (i < template.fields.length - 1) {%>,<% } %>
+<% } -%>
+});
 
-// End Template
+// Export the model for external access
+module.exports = mongoose.model( '<%= template.modelName %>', <%= template.modelName %>Schema );

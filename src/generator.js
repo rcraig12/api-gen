@@ -4,6 +4,8 @@ const fs = require('fs');
 
 const buildPath = '../build';
 
+const MONGO_FIELD_TYPES = [ 'String' ,'Number', 'Date', 'Buffer', 'Boolean', 'Mixed', 'ObjectId', 'Array', 'Decimal128', 'Map', 'Schema', 'UUID' ];
+
 const checkAndCreateBuildPaths = async ( projectFile ) => {
 
   // First path to check and create is the build folder itself
@@ -75,7 +77,48 @@ const checkAndCreateBuildPaths = async ( projectFile ) => {
 
 }
 
-const writeModel = async ( template, filename, modelName, projectFile ) => {
+const generatePackage = async ( projectFile ) => {
+  
+  const project = await JSON.parse( fs.readFileSync( path.join( __dirname, '../' + projectFile ) ) );
+
+  const parts = projectFile.split('/')
+  let projectFolder = parts[parts.length - 1];
+
+  projectFolder = projectFolder.replace( '.json', '' );
+
+  try {
+    const tpl = fs.readFileSync( __dirname + `/templates/package.ejs`, 'utf-8');
+    const render = ejs.render(tpl, {filename: __dirname + `/templates/package.ejs`, template: project});
+    const result = fs.writeFileSync( path.join( __dirname, `${buildPath}/${projectFolder}/package.json`), render);
+    console.log(render);
+  } catch (error) {
+    console.log(error);
+  }  
+
+}
+
+const generateIndex = async ( projectFile ) => {
+
+  const project = await JSON.parse( fs.readFileSync( path.join( __dirname, '../' + projectFile ) ) );
+
+  const parts = projectFile.split('/')
+  let projectFolder = parts[parts.length - 1];
+
+  projectFolder = projectFolder.replace( '.json', '' );
+
+  try {
+    const tpl = fs.readFileSync( __dirname + `/templates/index.ejs`, 'utf-8');
+    const render = ejs.render(tpl, {filename: __dirname + `/templates/index.ejs`, template: project});
+    const result = fs.writeFileSync( path.join( __dirname, `${buildPath}/${projectFolder}/index.js`), render);
+    console.log(render);
+  } catch (error) {
+    console.log(error);
+  } 
+
+}
+
+
+const generateModel = async ( filename, model, projectFile ) => {
 
   const parts = projectFile.split('/')
   let projectFolder = parts[parts.length - 1];
@@ -83,12 +126,13 @@ const writeModel = async ( template, filename, modelName, projectFile ) => {
   projectFolder = projectFolder.replace( '.json', '' );
 
   const templateData = {
-    modelName: modelName
+    modelName: model.tableName,
+    fields: model.fields
   };
 
   try {
-    const tpl = fs.readFileSync( __dirname + `/templates/${template}.ejs`, 'utf-8');
-    const render = ejs.render(tpl, {filename: __dirname + `/templates/${template}.ejs`, template: templateData});
+    const tpl = fs.readFileSync( __dirname + `/templates/model.ejs`, 'utf-8');
+    const render = ejs.render(tpl, {filename: __dirname + `/templates/model.ejs`, template: templateData});
     const result = fs.writeFileSync( path.join( __dirname, `${buildPath}/${projectFolder}/src/models/${filename}.js`), render);
     console.log(render);
   } catch (error) {
@@ -105,11 +149,16 @@ module.exports.createModels = async ( projectFile ) => {
   const project = await JSON.parse( fs.readFileSync( path.join( __dirname, '../' + projectFile ) ) );
   console.log(project.models.length);
 
-  try {
-    await writeModel( "model", "testModel" , "User", projectFile );
-  } catch (error) {
-    console.log(error);
-  }
+  await generatePackage(projectFile);
+  await generateIndex(projectFile);
+  
+  project.models.forEach( async model => {
+
+    await generateModel( `${model.tableName}Model` , model, projectFile );
+
+  });
+  
+
   
 
 }

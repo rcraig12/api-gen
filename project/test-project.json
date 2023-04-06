@@ -1,14 +1,21 @@
 {
-  "projectName" : "Test Project",
-  "projectVersion" : "1.0.0",
+  "projectName" : "test-project",
+  "projectVersion" : "1.0.0a",
+  "projectDescription" : "A test project for getting the generator to create an basic build with authentication",
   "models" : [
     { 
-      "tableName" : "users",
+      "tableName" : "user",
       "fields" : [
-        { "fieldName" : "name", "fieldType" : "string" },
-        { "fieldName" : "email", "fieldType" : "string" },
+        { "fieldName" : "name", "fieldType" : "String" },
+        { "fieldName" : "email", "fieldType" : "String" },
         { "fieldName" : "password", "fieldType" : "bcrypt" },
-        { "fieldName" : "role", "fieldType" : "string" }
+        { "fieldName" : "role", "fieldType" : "String" }
+      ]
+    },
+    { 
+      "tableName" : "role",
+      "fields" : [
+        { "fieldName" : "name", "fieldType" : "String" }
       ]
     }
   ],
