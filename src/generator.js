@@ -6,6 +6,7 @@ const buildPath = '../build';
 
 const MONGO_FIELD_TYPES = [ 'String' ,'Number', 'Date', 'Buffer', 'Boolean', 'Mixed', 'ObjectId', 'Array', 'Decimal128', 'Map', 'Schema', 'UUID' ];
 
+
 const checkAndCreateBuildPaths = async ( projectFile ) => {
 
   // First path to check and create is the build folder itself
@@ -77,6 +78,7 @@ const checkAndCreateBuildPaths = async ( projectFile ) => {
 
 }
 
+
 const generatePackage = async ( projectFile ) => {
   
   const project = await JSON.parse( fs.readFileSync( path.join( __dirname, '../' + projectFile ) ) );
@@ -96,6 +98,7 @@ const generatePackage = async ( projectFile ) => {
   }  
 
 }
+
 
 const generateIndex = async ( projectFile ) => {
 
@@ -147,18 +150,15 @@ module.exports.createModels = async ( projectFile ) => {
   // First of all lets make sure the build path is there and a appropriate project folder exists
   await checkAndCreateBuildPaths( projectFile );
   const project = await JSON.parse( fs.readFileSync( path.join( __dirname, '../' + projectFile ) ) );
-  console.log(project.models.length);
+  console.log( project.models.length );
 
-  await generatePackage(projectFile);
-  await generateIndex(projectFile);
+  await generatePackage( projectFile );
+  await generateIndex( projectFile );
   
-  project.models.forEach( async model => {
+  project.models.forEach( async ( model ) => {
 
     await generateModel( `${model.tableName}Model` , model, projectFile );
 
   });
   
-
-  
-
 }
