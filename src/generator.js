@@ -1,3 +1,4 @@
+const ejs = require('ejs');
 const path = require('path');
 const fs = require('fs');
 
@@ -74,6 +75,28 @@ const checkAndCreateBuildPaths = async ( projectFile ) => {
 
 }
 
+const writeModel = async ( template, filename, modelName, projectFile ) => {
+
+  const parts = projectFile.split('/')
+  let projectFolder = parts[parts.length - 1];
+
+  projectFolder = projectFolder.replace( '.json', '' );
+
+  const templateData = {
+    modelName: modelName
+  };
+
+  try {
+    const tpl = fs.readFileSync( __dirname + `/templates/${template}.ejs`, 'utf-8');
+    const render = ejs.render(tpl, {filename: __dirname + `/templates/${template}.ejs`, template: templateData});
+    const result = fs.writeFileSync( path.join( __dirname, `${buildPath}/${projectFolder}/src/models/${filename}.js`), render);
+    console.log(render);
+  } catch (error) {
+    console.log(error);
+  }
+  
+}
+
 
 module.exports.createModels = async ( projectFile ) => {
 
@@ -82,5 +105,11 @@ module.exports.createModels = async ( projectFile ) => {
   const project = await JSON.parse( fs.readFileSync( path.join( __dirname, '../' + projectFile ) ) );
   console.log(project.models.length);
 
+  try {
+    await writeModel( "model", "testModel" , "User", projectFile );
+  } catch (error) {
+    console.log(error);
+  }
+  
 
 }
