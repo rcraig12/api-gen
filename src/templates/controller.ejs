@@ -1,0 +1,18 @@
+const express = require('express');
+const Customer = require('../models/customer');
+
+const pageData = {
+    title: 'Customer Page'
+}
+
+const index = (req,res) => {
+
+    customer = new Customer;
+    customer.get();
+
+    res.render('customer/index', pageData);
+}
+
+module.exports = {
+    index
+};
