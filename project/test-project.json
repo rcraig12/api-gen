@@ -19,8 +19,22 @@
       ]
     }
   ],
-  "controllers" : [],
+  "controllers" : [
+    {
+      "controllerName" : "user",
+      "methods" : [
+        { "name" : "index" }
+      ]
+    }
+  ],
   "views" : [],
-  "routes" : [],
+  "routes" : [
+    {
+      "routerName" : "user",
+      "routes" : [
+        { "action" : "get", "path" : "/", "controller" : "user", "method" : "index", "description" : "Get all users" }
+      ]
+    }
+  ],
   "middleware" : []
 }
