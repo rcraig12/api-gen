@@ -2,9 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const projectSlice = createSlice({
   name: 'project',
-  initialState: {
-    value: '',
-  },
+  initialState: [],
   reducers: {
     add: (state) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It

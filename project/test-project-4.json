@@ -1,0 +1,40 @@
+{
+  "projectName" : "test-project",
+  "projectVersion" : "1.0.0a",
+  "projectDescription" : "A test project for getting the generator to create an basic build with authentication",
+  "models" : [
+    { 
+      "modelName" : "user",
+      "fields" : [
+        { "fieldName" : "name", "fieldType" : "String" },
+        { "fieldName" : "email", "fieldType" : "String" },
+        { "fieldName" : "password", "fieldType" : "bcrypt" },
+        { "fieldName" : "role", "fieldType" : "String" }
+      ]
+    },
+    { 
+      "modelName" : "role",
+      "fields" : [
+        { "fieldName" : "name", "fieldType" : "String" }
+      ]
+    }
+  ],
+  "controllers" : [
+    {
+      "controllerName" : "user",
+      "methods" : [
+        { "name" : "index" }
+      ]
+    }
+  ],
+  "views" : [],
+  "routers" : [
+    {
+      "routerName" : "user",
+      "router" : [
+        { "action" : "get", "path" : "/", "controller" : "user", "method" : "index", "description" : "Get all users" }
+      ]
+    }
+  ],
+  "middleware" : []
+}

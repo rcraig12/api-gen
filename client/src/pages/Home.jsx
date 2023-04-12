@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 import NavBar from '../components/NavBar'
+import PageWrapper from '../components/PageWrapper'
 
 import Banner from '../homebanner.png'
 
@@ -36,7 +37,9 @@ const Home = () => {
   return (
     <>
       <NavBar />
-      <div className='homecontainer'><img src={Banner} alt="" /></div>
+      <PageWrapper centered={true}>
+        <img src={Banner} alt="" />
+      </PageWrapper>
     </>
   );
 }

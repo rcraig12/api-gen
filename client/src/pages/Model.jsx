@@ -1,11 +1,14 @@
 import React from 'react'
 import NavBar from '../components/NavBar'
+import PageWrapper from '../components/PageWrapper'
 
 const Model = () => {
   return (
     <>
       <NavBar />
-      <div>Model</div>
+      <PageWrapper>
+        <h2 className='pageHeading'>Models</h2>
+      </PageWrapper>
     </>
   )
 }

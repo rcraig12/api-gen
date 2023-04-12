@@ -1,11 +1,14 @@
 import React from 'react'
 import NavBar from '../components/NavBar'
+import PageWrapper from '../components/PageWrapper'
 
 const Controller = () => {
   return (
     <>
       <NavBar />
-      <div>Controller</div>
+      <PageWrapper>
+        <h2 className='pageHeading'>Controllers</h2>
+      </PageWrapper>
     </>
   )
 }
