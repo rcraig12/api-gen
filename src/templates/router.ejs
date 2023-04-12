@@ -1,0 +1,8 @@
+// <%= template.routerName %>Router
+const express = require('express');
+const <%= template.routerName %>Router = express.Router();
+const customerController = require('../controllers/customerController');
+// <%= template.description %>
+router.get( '/', customerController.index );
+
+module.exports = <%= template.routerName %>Router;

@@ -144,6 +144,52 @@ const generateModel = async ( filename, model, projectFile ) => {
   
 }
 
+const generateController = async ( filename, controller, projectFile ) => {
+
+  const parts = projectFile.split('/')
+  let projectFolder = parts[parts.length - 1];
+
+  projectFolder = projectFolder.replace( '.json', '' );
+
+  // const templateData = {
+  //   modelName: model.tableName,
+  //   fields: model.fields
+  // };
+
+  try {
+    const tpl = fs.readFileSync( __dirname + `/templates/controller.ejs`, 'utf-8');
+    const render = ejs.render(tpl, {filename: __dirname + `/templates/controller.ejs`, template: controller});
+    const result = fs.writeFileSync( path.join( __dirname, `${buildPath}/${projectFolder}/src/controllers/${filename}.js`), render);
+    console.log(render);
+  } catch (error) {
+    console.log(error);
+  }
+  
+}
+
+const generateRouter = async ( filename, router, projectFile ) => {
+
+  const parts = projectFile.split('/')
+  let projectFolder = parts[parts.length - 1];
+
+  projectFolder = projectFolder.replace( '.json', '' );
+
+  // const templateData = {
+  //   modelName: model.tableName,
+  //   fields: model.fields
+  // };
+
+  try {
+    const tpl = fs.readFileSync( __dirname + `/templates/router.ejs`, 'utf-8');
+    const render = ejs.render(tpl, {filename: __dirname + `/templates/router.ejs`, template: router});
+    const result = fs.writeFileSync( path.join( __dirname, `${buildPath}/${projectFolder}/src/routes/${filename}.js`), render);
+    console.log(render);
+  } catch (error) {
+    console.log(error);
+  }
+  
+}
+
 
 module.exports.createModels = async ( projectFile ) => {
 
@@ -157,7 +203,19 @@ module.exports.createModels = async ( projectFile ) => {
   
   project.models.forEach( async ( model ) => {
 
-    await generateModel( `${model.tableName}Model` , model, projectFile );
+    await generateModel( `${model.modelName}Model` , model, projectFile );
+
+  });
+
+  project.controllers.forEach( async ( controller ) => {
+
+    await generateController( `${controller.controllerName}Controller` , controller, projectFile );
+
+  });
+
+  project.routers.forEach( async ( router ) => {
+
+    await generateRouter( `${router.routerName}Router` , router, projectFile );
 
   });
   

@@ -4,7 +4,7 @@
   "projectDescription" : "A test project for getting the generator to create an basic build with authentication",
   "models" : [
     { 
-      "tableName" : "user",
+      "modelName" : "user",
       "fields" : [
         { "fieldName" : "name", "fieldType" : "String" },
         { "fieldName" : "email", "fieldType" : "String" },
@@ -13,7 +13,7 @@
       ]
     },
     { 
-      "tableName" : "role",
+      "modelName" : "role",
       "fields" : [
         { "fieldName" : "name", "fieldType" : "String" }
       ]
@@ -28,10 +28,10 @@
     }
   ],
   "views" : [],
-  "routes" : [
+  "routers" : [
     {
       "routerName" : "user",
-      "routes" : [
+      "router" : [
         { "action" : "get", "path" : "/", "controller" : "user", "method" : "index", "description" : "Get all users" }
       ]
     }
