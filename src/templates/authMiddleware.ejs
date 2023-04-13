@@ -1,0 +1,36 @@
+const jwt = require('jsonwebtoken');
+const secretKey = 'mysecretkey'; // Replace this with your own secret key
+
+const authenticateToken = (req, res, next) => {
+
+  // Get the authorization header from the request
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Extract the token from the header
+  
+  if (token == null) {
+
+    return res.sendStatus(401); // Return a 401 Unauthorized response if no token is provided
+    
+  }
+
+  jwt.verify(token, secretKey, (err, user) => {
+
+    if (err) {
+      return res.sendStatus(403); // Return a 403 Forbidden response if the token is invalid or expired
+    }
+
+    req.user = user; // Store the user object in the request object for use in later middleware or routes
+    next(); // Call the next middleware or route handler
+
+  });
+
+}
+
+const generateToken = (user) => {
+
+  const token = jwt.sign(user, secretKey, { expiresIn: '1h' }); // Generate a token with a 1 hour expiration
+  return token;
+
+}
+
+module.exports = { authenticateToken, generateToken };

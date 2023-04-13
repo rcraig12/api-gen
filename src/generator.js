@@ -190,6 +190,32 @@ const generateRouter = async ( filename, router, projectFile ) => {
   
 }
 
+const generateAuthMiddleware = async ( projectFile ) => {
+
+  const project = await JSON.parse( fs.readFileSync( path.join( __dirname, '../' + projectFile ) ) );
+
+  const parts = projectFile.split('/')
+  let projectFolder = parts[parts.length - 1];
+
+  projectFolder = projectFolder.replace( '.json', '' );
+
+  // const templateData = {
+  //   modelName: model.tableName,
+  //   fields: model.fields
+  // };
+
+  try {
+    const tpl = fs.readFileSync( __dirname + `/templates/authMiddleware.ejs`, 'utf-8');
+    const render = ejs.render(tpl, {filename: __dirname + `/templates/authMiddleware.ejs`, template: project});
+    const result = fs.writeFileSync( path.join( __dirname, `${buildPath}/${projectFolder}/src/middleware/authMiddleware.js`), render );
+    console.log(render);
+  } catch (error) {
+    console.log(error);
+  }
+  
+}
+
+
 
 module.exports.createModels = async ( projectFile ) => {
 
@@ -200,6 +226,7 @@ module.exports.createModels = async ( projectFile ) => {
 
   await generatePackage( projectFile );
   await generateIndex( projectFile );
+  await generateAuthMiddleware( projectFile );
   
   project.models.forEach( async ( model ) => {
 

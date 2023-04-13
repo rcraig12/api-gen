@@ -25,6 +25,7 @@ app.get('/express_backend', (req, res) => { //Line 9
 // }
 
 // generateAPI( "./project/test-project.json" );
-// //console.log(project);
-// This displays message that the server running and listening to specified port
+//console.log(project);
+
+//This displays message that the server running and listening to specified port
 app.listen(port, () => console.log(`Listening on port ${port}`)); //Line 6

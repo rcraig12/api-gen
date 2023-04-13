@@ -1,8 +1,11 @@
 // <%= template.routerName %>Router
 const express = require('express');
-const <%= template.routerName %>Router = express.Router();
-const customerController = require('../controllers/customerController');
-// <%= template.description %>
-router.get( '/', customerController.index );
+const <%= template.routerName -%>Router = express.Router();
+const <%= template.routerName -%>Controller = require('../controllers/<%= template.routerName -%>Controller');
 
+<% for(var i=0; i< template.router.length; i++) { -%>
+// <%= template.router[i].description%>
+router.<%= template.router[i].action -%>( '<%= template.router[i].path -%>', <%= template.router[i].controller -%>Controller.<%= template.router[i].method -%> );
+
+<% } -%>
 module.exports = <%= template.routerName %>Router;
