@@ -10,13 +10,15 @@ const authenticateToken = (req, res, next) => {
   if (token == null) {
 
     return res.sendStatus(401); // Return a 401 Unauthorized response if no token is provided
-    
+
   }
 
   jwt.verify(token, secretKey, (err, user) => {
 
     if (err) {
+
       return res.sendStatus(403); // Return a 403 Forbidden response if the token is invalid or expired
+      
     }
 
     req.user = user; // Store the user object in the request object for use in later middleware or routes
