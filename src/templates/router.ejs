@@ -9,3 +9,24 @@ router.<%= template.router[i].action -%>( '<%= template.router[i].path -%>', <%=
 
 <% } -%>
 module.exports = <%= template.routerName %>Router;
+
+/**
+
+Included until i work out how to dynamically include middleware based on routes
+
+const { authenticateToken, generateToken } = require('./authMiddleware');
+
+app.post('/login', (req, res) => {
+  // Authenticate the user and generate a token
+  const user = { id: 1, username: 'johndoe' }; // Replace with your own user object
+  const token = generateToken(user);
+
+  res.json({ token }); // Return the token to the client
+});
+
+app.get('/protected', authenticateToken, (req, res) => {
+  // This route is protected by the authenticateToken middleware
+  res.json(req.user); // Return the user object from the request
+});
+
+**/
