@@ -5,7 +5,7 @@ const <%= template.routerName -%>Controller = require('../controllers/<%= templa
 
 <% for(var i=0; i< template.router.length; i++) { -%>
 // <%= template.router[i].description%>
-router.<%= template.router[i].action -%>( '<%= template.router[i].path -%>', <%= template.router[i].controller -%>Controller.<%= template.router[i].method -%> );
+<%= template.routerName -%>Router.<%= template.router[i].action -%>( '<%= template.router[i].path -%>', <%= template.router[i].controller -%>Controller.<%= template.router[i].method -%> );
 
 <% } -%>
 module.exports = <%= template.routerName %>Router;
